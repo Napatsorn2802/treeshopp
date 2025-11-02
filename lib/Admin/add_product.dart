@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
 import 'package:treeshop/services/database.dart';
+import 'package:treeshop/widget/support_widget.dart';
+
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
 
@@ -45,13 +47,12 @@ class _AddProductState extends State<AddProduct> {
         namecontroller.text = "";
         pricecontroller.text = "";
         detailcontroller.text = "";
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Color(0xFF9458ED),
-            behavior: SnackBarBehavior.floating,
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Color(0xFF6B5444),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
+            behavior: SnackBarBehavior.floating,
             content: Row(
               children: [
                 Icon(Icons.check_circle, color: Colors.white),
@@ -59,7 +60,10 @@ class _AddProductState extends State<AddProduct> {
                 Expanded(
                   child: Text(
                     "Product uploaded successfully!",
-                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
                   ),
                 ),
               ],
@@ -72,485 +76,265 @@ class _AddProductState extends State<AddProduct> {
 
   String? value;
   final List<String> categoryitem = [
-    'Pen',
-    'Pencil',
-    'Book',
-    'Watercolor',
-    'Paper',
-    'Eraser'
+    'Cantus',
+    'Flower',
+    'Tree',
+    'Fruit',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF8F9FE),
+      backgroundColor: Color(0xFFB89968),
       appBar: AppBar(
+        backgroundColor: Color(0xFFB89968),
         elevation: 0,
-        backgroundColor: Colors.transparent,
         leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Container(
-            margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: Color(0xFF9458ED),
-              size: 20,
-            ),
-          ),
-        ),
-        title: Text(
-          "Add Product",
-          style: TextStyle(
-            fontSize: 22.0,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF2D2D2D),
-          ),
-        ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(Icons.arrow_back_ios_new_outlined,
+                  color: Color(0xFF3D2E1F)),
+            )),
+        title: Text("Add Product",
+            style: TextStyle(
+              color: Color(0xFF3D2E1F),
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+            )),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
+        child: Container(
+          margin: EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 30),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Upload Image Section
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      "Product Image",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF2D2D2D),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      "Upload a clear photo of your product",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    
-                    // Image Picker
-                    selectedImage == null
-                        ? GestureDetector(
-                            onTap: () {
-                              getImage();
-                            },
-                            child: Container(
-                              height: 200,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(
-                                  color: Color(0xFF9458ED).withOpacity(0.3),
-                                  width: 2,
-                                  style: BorderStyle.solid,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFF9458ED).withOpacity(0.1),
-                                    blurRadius: 15,
-                                    offset: Offset(0, 5),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(0xFFFF80D3).withOpacity(0.2),
-                                          Color(0xFF9458ED).withOpacity(0.2),
-                                        ],
-                                      ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.add_photo_alternate_outlined,
-                                      size: 50,
-                                      color: Color(0xFF9458ED),
-                                    ),
-                                  ),
-                                  SizedBox(height: 15),
-                                  Text(
-                                    "Tap to upload",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xFF9458ED),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              getImage();
-                            },
-                            child: Stack(
-                              children: [
-                                Container(
-                                  height: 200,
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(25),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0xFF9458ED).withOpacity(0.2),
-                                        blurRadius: 20,
-                                        offset: Offset(0, 8),
-                                      ),
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(25),
-                                    child: Image.file(
-                                      selectedImage!,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 10,
-                                  right: 10,
-                                  child: Container(
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(0xFFFF80D3),
-                                          Color(0xFF9458ED),
-                                        ],
-                                      ),
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Color(0xFF9458ED).withOpacity(0.4),
-                                          blurRadius: 10,
-                                          offset: Offset(0, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //อัพโหลดรูปสินค้า
+                Text(
+                  "Upload the Product Image",
+                  style: AppWidget.lightTextFeildStyle(),
+                ),
+                SizedBox(height: 20),
+                selectedImage == null
+                    ? GestureDetector(
+                        onTap: () {
+                          getImage();
+                        },
+                        child: Center(
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color(0xFF6B5444), width: 2.5),
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 15,
+                                  offset: Offset(0, 5),
                                 ),
                               ],
                             ),
+                            child: Icon(Icons.camera_alt_outlined,
+                                color: Color(0xFF6B5444), size: 45),
                           ),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 40.0),
-
-              // Product Name
-              _buildLabel("Product Name"),
-              SizedBox(height: 12.0),
-              _buildTextField(
-                controller: namecontroller,
-                hint: "Enter product name",
-                icon: Icons.inventory_2_outlined,
-              ),
-
-              SizedBox(height: 25.0),
-
-              // Product Price
-              _buildLabel("Product Price"),
-              SizedBox(height: 12.0),
-              _buildTextField(
-                controller: pricecontroller,
-                hint: "Enter price (e.g., 120)",
-                icon: Icons.attach_money_rounded,
-                keyboardType: TextInputType.number,
-              ),
-
-              SizedBox(height: 25.0),
-
-              // Product Category
-              _buildLabel("Product Category"),
-              SizedBox(height: 12.0),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    items: categoryitem
-                        .map(
-                          (item) => DropdownMenuItem(
-                            value: item,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  _getCategoryIcon(item),
-                                  color: Color(0xFF9458ED),
-                                  size: 20,
-                                ),
-                                SizedBox(width: 12),
-                                Text(
-                                  item,
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF2D2D2D),
-                                  ),
-                                ),
-                              ],
+                        ),
+                      )
+                    : Center(
+                        child: Material(
+                          elevation: 8,
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color(0xFF6B5444), width: 2.5),
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: ((newValue) => setState(() {
-                          value = newValue;
-                        })),
-                    dropdownColor: Colors.white,
-                    hint: Row(
-                      children: [
-                        Icon(
-                          Icons.category_outlined,
-                          color: Colors.grey[400],
-                          size: 20,
-                        ),
-                        SizedBox(width: 12),
-                        Text(
-                          "Select Category",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 15.0,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.file(selectedImage!,
+                                    fit: BoxFit.cover)),
                           ),
                         ),
-                      ],
-                    ),
-                    iconSize: 28,
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: Color(0xFF9458ED),
-                    ),
-                    value: value,
-                  ),
+                      ),
+                SizedBox(height: 30),
+                Text(
+                  "Product Name", //ชื่อสินค้า
+                  style: AppWidget.lightTextFeildStyle(),
                 ),
-              ),
-
-              SizedBox(height: 25.0),
-
-              // Product Detail
-              _buildLabel("Product Detail"),
-              SizedBox(height: 12.0),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  maxLines: 5,
-                  controller: detailcontroller,
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    color: Color(0xFF2D2D2D),
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Describe your product in detail...",
-                    hintStyle: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 40.0),
-
-              // Add Product Button
-              Container(
-                width: double.infinity,
-                height: 56,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFFFF80D3),
-                      Color(0xFF9458ED),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color(0xFF8B7355), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xFF9458ED).withOpacity(0.4),
-                      blurRadius: 15,
-                      offset: Offset(0, 8),
-                    ),
-                  ],
+                  child: TextField(
+                    controller: namecontroller,
+                    decoration: InputDecoration(border: InputBorder.none),
+                  ),
                 ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
+                SizedBox(height: 30),
+                Text(
+                  "Product Price", //ราคาสินค้า
+                  style: AppWidget.lightTextFeildStyle(),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color(0xFF8B7355), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: pricecontroller,
+                    decoration: InputDecoration(border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Text(
+                  "Product Detail", //รายละเอียดสินค้า
+                  style: AppWidget.lightTextFeildStyle(),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color(0xFF8B7355), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    maxLines: 6, //เพิ่มขนาดช่อง
+                    controller: detailcontroller,
+                    decoration: InputDecoration(border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(height: 40),
+                Text(
+                  "Product Category", //หมวดหมู่สินค้า
+                  style: AppWidget.lightTextFeildStyle(),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color(0xFF8B7355), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                    items: categoryitem
+                        .map((item) => DropdownMenuItem(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: AppWidget.semiboldTextFeildStyle(),
+                            )))
+                        .toList(),
+                    onChanged: ((value) => setState(() {
+                          this.value = value;
+                        })),
+                    dropdownColor: Colors.white,
+                    // เลือกหมวดหมู่
+                    hint: Text("Select Category"),
+                    iconSize: 36,
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: Color(0xFF6B5444),
+                    ),
+                    value: value,
+                  )),
+                ),
+                SizedBox(height: 40),
+                Center(
+                  child: GestureDetector(
                     onTap: () {
                       uploadItem();
                     },
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.add_circle_outline,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            "Add Product",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5,
-                            ),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 60, vertical: 18),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF6B5444),
+                            Color(0xFF8B6F47),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF6B5444).withOpacity(0.4),
+                            blurRadius: 15,
+                            offset: Offset(0, 6),
                           ),
                         ],
                       ),
+                      child: Text(
+                        "Add Product",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-
-              SizedBox(height: 30.0),
-            ],
-          ),
+                )
+              ]),
         ),
       ),
     );
-  }
-
-  // Helper Widget for Labels
-  Widget _buildLabel(String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w600,
-        color: Color(0xFF2D2D2D),
-      ),
-    );
-  }
-
-  // Helper Widget for Text Fields
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String hint,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: controller,
-        keyboardType: keyboardType,
-        style: TextStyle(
-          fontSize: 15.0,
-          color: Color(0xFF2D2D2D),
-        ),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: hint,
-          hintStyle: TextStyle(
-            color: Colors.grey[400],
-            fontSize: 15.0,
-          ),
-          prefixIcon: Icon(
-            icon,
-            color: Color(0xFF9458ED),
-            size: 22,
-          ),
-          contentPadding: EdgeInsets.symmetric(vertical: 16.0),
-        ),
-      ),
-    );
-  }
-
-  // Helper Function for Category Icons
-  IconData _getCategoryIcon(String category) {
-    switch (category) {
-      case 'Pen':
-        return Icons.edit_outlined;
-      case 'Pencil':
-        return Icons.create_outlined;
-      case 'Book':
-        return Icons.menu_book_outlined;
-      case 'Watercolor':
-        return Icons.palette_outlined;
-      case 'Paper':
-        return Icons.description_outlined;
-      case 'Eraser':
-        return Icons.cleaning_services_outlined;
-      default:
-        return Icons.category_outlined;
-    }
-  }
-
-  @override
-  void dispose() {
-    namecontroller.dispose();
-    pricecontroller.dispose();
-    detailcontroller.dispose();
-    super.dispose();
   }
 }

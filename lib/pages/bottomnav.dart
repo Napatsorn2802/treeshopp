@@ -35,17 +35,18 @@ class _BottomNavState extends State<BottomNav> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         height: 65,
-        backgroundColor:  Color(0xfff2f2f2),
-        color: const Color.fromARGB(255, 146, 30, 218),
+        backgroundColor:  Color(0xfff2f2f2),//สีพื้นหลัง
+        color: const Color.fromARGB(255, 88, 52, 1),//สีแถบ
         animationDuration: Duration(milliseconds: 500),
         onTap: (int index){
           setState(() {
             currentTabIndex=index;
           });
         },
+        //บรรดาไอค่อน
         items: [
           Icon(
-            Icons.home_work_outlined,
+            Icons.home_filled,
             color: Colors.white,
             ),
           Icon(
