@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sealyshop/services/database.dart';
+
+import 'package:treeshop/services/database.dart';
 
 class CategoryProduct extends StatefulWidget {
   String category;
-  CategoryProduct({required this.category});
+  CategoryProduct({super.key, required this.category});
 
   @override
   State<CategoryProduct> createState() => _CategoryProductState();

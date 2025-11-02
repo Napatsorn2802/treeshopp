@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "648559532075",
-    "project_id": "sealyshop-ff94c",
-    "storage_bucket": "sealyshop-ff94c.firebasestorage.app"
+    "project_number": "360804045605",
+    "project_id": "shopping-5d81a",
+    "storage_bucket": "shopping-5d81a.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:648559532075:android:850068dfb85b11fe30f26e",
+        "mobilesdk_app_id": "1:360804045605:android:07a166e30b5d79f04ac0cc",
         "android_client_info": {
-          "package_name": "com.example.sealyshop"
+          "package_name": "com.example.treeshop"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBw4syERiXa_uasNWlfXPDVYO9nrDZX8mM"
+          "current_key": "AIzaSyCPNfoQgueJFmWqWll1jZIN8OIkDsJafLE"
         }
       ],
       "services": {

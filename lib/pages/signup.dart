@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
-import 'package:sealyshop/pages/bottomnav.dart';
-import 'package:sealyshop/pages/login.dart';
-import 'package:sealyshop/services/database.dart';
-import 'package:sealyshop/services/shared_pref.dart';
+import 'package:treeshop/pages/bottomnav.dart';
+import 'package:treeshop/pages/login.dart';
+import 'package:treeshop/services/database.dart';
+import 'package:treeshop/services/shared_pref.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

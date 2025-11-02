@@ -1,6 +1,6 @@
 {
-    "name": "sealyshop",
-    "short_name": "sealyshop",
+    "name": "treeshop",
+    "short_name": "treeshop",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

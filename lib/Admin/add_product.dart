@@ -4,9 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
-import 'package:sealyshop/services/database.dart';
-import 'package:sealyshop/widget/support_widget.dart';
-
+import 'package:treeshop/services/database.dart';
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
 

@@ -1,8 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:sealyshop/pages/Order.dart';
-import 'package:sealyshop/pages/Profile.dart';
-import 'package:sealyshop/pages/home.dart';
+import 'package:treeshop/pages/Order.dart';
+import 'package:treeshop/pages/Profile.dart';
+import 'package:treeshop/pages/home.dart';
+
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});

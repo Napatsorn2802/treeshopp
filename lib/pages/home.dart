@@ -1,8 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:sealyshop/pages/category_products.dart';
-import 'package:sealyshop/widget/support_widget.dart';
+import 'package:treeshop/pages/category_products.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -49,7 +48,7 @@ class _HomeState extends State<Home> {
                 Stack(
                   children: [
                     // GIF Background Container (เต็มจอ ไม่มีขอบ)
-                    Container(
+                    SizedBox(
                       height: 220,
                       width: double.infinity,
                       child: Image.asset(
@@ -688,7 +687,7 @@ class CategoryTile extends StatelessWidget {
   final String image,name;
   final bool isSelected;
 
-  CategoryTile({
+  const CategoryTile({
     super.key,
     required this.image,
     this.isSelected = false, required this.name,

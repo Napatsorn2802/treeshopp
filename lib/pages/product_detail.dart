@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sealyshop/widget/support_widget.dart';
+import 'package:treeshop/widget/support_widget.dart';
 
 class ProductDetail extends StatefulWidget {
   const ProductDetail({super.key});
