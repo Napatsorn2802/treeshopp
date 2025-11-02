@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:treeshop/Admin/add_product.dart';
+import 'package:treeshop/Admin/admin_login.dart';
 import 'package:treeshop/pages/bottomnav.dart';
 import 'package:treeshop/pages/home.dart';
 import 'package:treeshop/pages/login.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: LogIn(),
+      home: AdminLogin(),
     );
   }
 }

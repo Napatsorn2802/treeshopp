@@ -28,20 +28,21 @@ registration()async{
       UserCredential userCredential= await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email!, password: password!);
       
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor:Color.fromARGB(255, 4, 159, 6),
+      backgroundColor:Color.fromARGB(255, 46, 155, 16),
                       //ลงทะเบียนเรียบร้อยแล้ว
       content: Text("Registered Successfully",style: TextStyle(fontSize: 20),),));
       String Id= randomAlphaNumeric(10);//ให้IDแบบสุ่ม
       await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
       await SharedPreferenceHelper().saveUserId(Id);
       await SharedPreferenceHelper().saveUserName(namecontroller.text);
-      await SharedPreferenceHelper().saveUserImage("images/user.png");
+      //ลิ้งภาพจากอินเทอร์เน็ต
+      await SharedPreferenceHelper().saveUserImage("https://wafuu.com/cdn/shop/products/frieren-beyond-journeys-end-calendar-2024-624499_540x.jpg?v=1706143291");
       Map<String, dynamic> userInfoMap={
         "Name": namecontroller.text,
         "Email": mailcontroller.text,
         "Id": Id,
-          "Image":
-          "images/user.png"
+          "Image"://ลิ้งภาพจากอินเทอร์เน็ต
+          "https://wafuu.com/cdn/shop/products/frieren-beyond-journeys-end-calendar-2024-624499_540x.jpg?v=1706143291"
       };
       await DatabaseMethod().addUserDetails(userInfoMap, Id);
       Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
@@ -49,20 +50,20 @@ registration()async{
                   //รหัสผ่านที่อ่อนแอ
       if(e.code=='weak-password'){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-         backgroundColor:Color.fromARGB(255, 216, 239, 8) ,
+         backgroundColor:Color.fromARGB(255, 241, 228, 80) ,
                         //รหัสผ่านที่ให้มาไม่แข็งแรงพอ
          content: Text("Password Provided is too Weak", style: TextStyle(fontSize: 20),),));
       }                 //อีเมลที่ใช้งานแล้ว
       else if(e.code=="email-already-in-use"){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-         backgroundColor:Color.fromARGB(255, 216, 239, 8)  ,
+         backgroundColor:Color.fromARGB(255, 241, 228, 80)  ,
                         //บัญชีมีอยู่แล้ว
          content: Text("Account Already exsists", style: TextStyle(fontSize: 20),),));
       }
     }
   }
 }
-
+bool _obscurePassword = true;
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -102,7 +103,6 @@ registration()async{
                 ),
                 SizedBox(height: 10,),
                 Text("Name",style:AppWidget.semiboldTextFeildStyle()),//ส่วนชื่อ
-                SizedBox(height: 10,),
                 Container(
                   padding: EdgeInsets.only(left:20 ),
                   decoration: BoxDecoration(
@@ -129,7 +129,6 @@ registration()async{
                 ),
                  SizedBox(height: 10,),
                 Text("Email",style:AppWidget.semiboldTextFeildStyle()),//ส่วนอีเมล
-                SizedBox(height: 10,),
                 Container(
                   padding: EdgeInsets.only(left:20 ),
                   decoration: BoxDecoration(
@@ -155,39 +154,48 @@ registration()async{
                   ),
                 ),
                SizedBox(height: 10,),
-                Text("Password",style:AppWidget.semiboldTextFeildStyle()),//ส่วนรหัสผ่าน
-                SizedBox(height: 10,),
-                Container(
-                  padding: EdgeInsets.only(left:20 ),
-                  decoration: BoxDecoration(
-                    color:Color(0xFFF4F5F9),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Color(0xFFE8DED2), width: 1.5),
-                  ),
-                  child: TextFormField(
-                    obscureText: true,
-                    validator: (value){
-                        if(value==null||value.isEmpty){
-                                  //กรุณากรอกรหัสของคุณ
+                Text("Password", style: AppWidget.semiboldTextFeildStyle()), // ส่วนรหัสผ่าน
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF4F5F9),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Color(0xFFE8DED2), width: 1.5),
+                    ),
+                    child: TextFormField(
+                      obscureText: _obscurePassword, // เปลี่ยนจาก true เป็น _obscurePassword
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          // กรุณากรอกรหัสของคุณ
                           return 'Please Enter your Password';
                         }
-                        else
                         return null;
-                    },
-                    controller: passwordcontroller,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Password",//รหัสผ่านในช่อง
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
+                      },
+                      controller: passwordcontroller,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Password", // รหัสผ่านในช่อง
+                        hintStyle: TextStyle(color: Colors.grey.shade400),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                            color: Colors.grey.shade600,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                ),
                 SizedBox(height: 10,),
                  Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                    children: [
                      Text("Forgot Passwored?",//ลืมรหัสผ่าน
-                     style:TextStyle(color:Color.fromARGB(255, 231, 150, 37),fontSize: 18,fontWeight: FontWeight.w500)),
+                     style:TextStyle(color:Color.fromARGB(255, 83, 35, 1),fontSize: 18,fontWeight: FontWeight.w500)),
                    ],
                  ),
                  SizedBox(height: 10,),
@@ -237,7 +245,7 @@ registration()async{
                         Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));//เส้นทางพาทคลิกไปหน้าเข้าสู่ระบบ
                       },
                       child: Text("Sign In",//สมัครสมาชิก
-                      style:TextStyle(color:Color.fromARGB(255, 231, 150, 37),fontSize: 18,fontWeight: FontWeight.w500)),
+                      style:TextStyle(color:Color.fromARGB(255, 83, 35, 1),fontSize: 18,fontWeight: FontWeight.w900)),
                     ),
                  ],)
               ],

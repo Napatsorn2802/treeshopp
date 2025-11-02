@@ -40,6 +40,7 @@ userLogin()async{
     }
   }
 }
+bool _obscurePassword = true; //สำหรับเปิดปิดรหัสผ่าน
   @override
   Widget build (BuildContext context){
     return Scaffold(
@@ -104,40 +105,49 @@ userLogin()async{
                     ),
                   ),
                 ),
-               SizedBox(height: 40,),
-                Text("Password",style:AppWidget.semiboldTextFeildStyle()),//ส่วนรหัสผ่าน
-                SizedBox(height: 20,),
-                Container(
-                  padding: EdgeInsets.only(left:20 ),
-                  decoration: BoxDecoration(
-                    color:Color(0xFFF4F5F9),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Color(0xFFE8DED2), width: 1.5),
-                  ),
-                  child: TextFormField(
-                    controller: passwordcontroller,
-                     validator: (value){
-                        if(value==null||value.isEmpty){
-                                  //กรุณากรอกรหัสของคุณ
+               SizedBox(height: 30,),
+                Text("Password", style: AppWidget.semiboldTextFeildStyle()), // ส่วนรหัสผ่าน
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 10),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF4F5F9),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Color(0xFFE8DED2), width: 1.5),
+                    ),
+                    child: TextFormField(
+                      obscureText: _obscurePassword, // เปลี่ยนจาก true เป็น _obscurePassword
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          // กรุณากรอกรหัสของคุณ
                           return 'Please Enter your Password';
                         }
-                        else
                         return null;
-                    },
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Password",//รหัสผ่านในช่อง
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
+                      },
+                      controller: passwordcontroller,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Password", // รหัสผ่านในช่อง
+                        hintStyle: TextStyle(color: Colors.grey.shade400),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                            color: Colors.grey.shade600,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                ),
                 SizedBox(height: 20,),
                  Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                    children: [
                      Text("Forgot Passwored?",//ลืมรหัสผ่าน
-                     style:TextStyle(color:Color.fromARGB(255, 231, 150, 37),fontSize: 18,fontWeight: FontWeight.w500)),
+                     style:TextStyle(color:Color.fromARGB(255, 117, 70, 4),fontSize: 18,fontWeight: FontWeight.w500)),
                    ],
                  ),
                  SizedBox(height: 30,),
@@ -186,7 +196,7 @@ userLogin()async{
                       Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));//เส้นทางพาทคลิกไปหน้าสมัครสมาชิก
                       },
                       child: Text("Sign Up",//สมัครสมาชิก
-                      style:TextStyle(color:Color.fromARGB(255, 231, 150, 37),fontSize: 18,fontWeight: FontWeight.w500)),
+                      style:TextStyle(color:Color.fromARGB(255, 117, 70, 4),fontSize: 18,fontWeight: FontWeight.w900)),
                     ),
                  ],)
               ],

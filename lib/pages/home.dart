@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:treeshop/pages/category_products.dart';
+import 'package:treeshop/services/shared_pref.dart';
 import 'package:treeshop/widget/support_widget.dart';
 
 class Home extends StatefulWidget{
@@ -24,11 +25,32 @@ List Categoryname=[
  "Fruit"
 ];
 
+String? name, image;
+
+getthesharedpref()async{
+  name= await SharedPreferenceHelper().getUserName();
+  image= await SharedPreferenceHelper().getUserImage();
+  setState(() {
+  });
+}
+
+ontheload()async{
+  await getthesharedpref();
+  setState(() {
+  });
+}
+
+@override
+void initState(){
+  ontheload();
+  super.initState();
+}
+
   @override
   Widget build (BuildContext context){ // เปลี่ยน constext เป็น context
     return Scaffold(
        backgroundColor: Color.fromARGB(168, 153, 115, 55),
-      body: Container(
+      body: name== null? Center(child: CircularProgressIndicator()): Container(
         margin: const EdgeInsets.only(top: 50,left: 20,right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,17 +63,20 @@ List Categoryname=[
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                  "Hey, Shivam",
+                  "Hey:" +name!,
                   style: AppWidget.boldTextFeildStyle(),
                     ),
-                    Text("Good Morning",
-                    style: AppWidget.lightTextFeildStyle(),
+                    Text("Welcome to the tree shop.",//ยินดีต้อนรับสู่ร้านต้นไม้
+                    style: AppWidget.lightTextFeildStyle().copyWith(
+                     fontSize: 18,
                     ),
+                    )
                 ],
               ),
                 ClipRRect( 
                   borderRadius: BorderRadius.circular(40),
-                  child: Image.asset("images/user1.jpg",
+                  child: Image.network(
+                    image!,
                   height: 75,
                   width: 75, 
                   fit: BoxFit.cover,)
