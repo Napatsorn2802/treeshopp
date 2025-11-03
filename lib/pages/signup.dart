@@ -36,13 +36,13 @@ registration()async{
       await SharedPreferenceHelper().saveUserId(Id);
       await SharedPreferenceHelper().saveUserName(namecontroller.text);
       //ลิ้งภาพจากอินเทอร์เน็ต
-      await SharedPreferenceHelper().saveUserImage("https://wafuu.com/cdn/shop/products/frieren-beyond-journeys-end-calendar-2024-624499_540x.jpg?v=1706143291");
+      await SharedPreferenceHelper().saveUserImage("https://cms.dmpcdn.com/moviearticle/2023/10/19/63a71380-6e35-11ee-96a4-83202a4973b8_webp_original.webp");
       Map<String, dynamic> userInfoMap={
         "Name": namecontroller.text,
         "Email": mailcontroller.text,
         "Id": Id,
           "Image"://ลิ้งภาพจากอินเทอร์เน็ต
-          "https://wafuu.com/cdn/shop/products/frieren-beyond-journeys-end-calendar-2024-624499_540x.jpg?v=1706143291"
+          "https://cms.dmpcdn.com/moviearticle/2023/10/19/63a71380-6e35-11ee-96a4-83202a4973b8_webp_original.webp"
       };
       await DatabaseMethod().addUserDetails(userInfoMap, Id);
       Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));

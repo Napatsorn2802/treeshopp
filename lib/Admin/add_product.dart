@@ -42,7 +42,7 @@ class _AddProductState extends State<AddProduct> {
         "Price": pricecontroller.text,
         "Detail": detailcontroller.text,
       };
-      await DatabaseMethod().AddProduct(addProduct, value!).then((value) {
+      await DatabaseMethod().addProduct(addProduct, value!).then((value) {
         selectedImage = null;
         namecontroller.text = "";
         pricecontroller.text = "";

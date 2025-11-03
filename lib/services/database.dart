@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:treeshop/Admin/all_orders.dart';
 
 class DatabaseMethod{
 
@@ -9,15 +10,33 @@ class DatabaseMethod{
       .set(userInfoMap);
   }
   
-  Future AddProduct(Map<String, dynamic> userInfoMap, String categoryname)async{
+  Future addProduct(Map<String, dynamic> userInfoMap, String categoryname)async{
     return await FirebaseFirestore.instance
       .collection(categoryname)
       .add(userInfoMap);
   }
 
+   updateStatus(
+    String id)async{
+    return await FirebaseFirestore.instance
+      .collection("Orders")
+      .doc(id)
+      .update({"Status":"Delivered"});
+  }
+
+
   Future<Stream<QuerySnapshot>> getProducts(String category)async{
     return await FirebaseFirestore.instance.collection(category).snapshots();
   }
+
+  
+  Future<Stream<QuerySnapshot>> allOrders()async{
+    return await FirebaseFirestore.instance
+    .collection("Orders")
+    .where("Status",isEqualTo: "On the way")
+    .snapshots();
+  }
+
 
   Future<Stream<QuerySnapshot>> getOrders(String email)async{
     return await FirebaseFirestore.instance
