@@ -1,8 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:treeshop/widget/support_widget.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:treeshop/services/constant.dart';
+import 'package:treeshop/services/database.dart';
+import 'package:treeshop/services/shared_pref.dart';
+// ignore: unused_import
+import 'package:treeshop/widget/support_widget.dart';
+import 'package:http/http.dart'as http;
+// ignore: must_be_immutable
 class ProductDetail extends StatefulWidget {
   String image, name, detail, price;
+  // ignore: use_key_in_widget_constructors
   ProductDetail(
       {required this.detail,
       required this.image,
@@ -14,6 +23,31 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+//ออเดอร์
+String? name, mail, image;
+
+getthesharedpref()async{
+  name= await SharedPreferenceHelper().getUserName();
+  mail= await SharedPreferenceHelper().getUserEmail();
+  image= await SharedPreferenceHelper().getUserImage();
+  setState(() {
+  });
+} 
+
+ontheload()async{
+  await getthesharedpref();
+  setState(() {
+  });
+}
+
+@override
+void initState(){
+  super.initState();
+  ontheload();
+}
+
+Map<String, dynamic>? paymentIntent;//ชำระเงิน
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,7 +201,7 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
             child: GestureDetector(
               onTap: () {
-                // ฟังก์ชันซื้อสินค้า
+                makePayment(widget.price);
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -199,4 +233,85 @@ class _ProductDetailState extends State<ProductDetail> {
       ),
     );
   }
-}
+  Future<void> makePayment(String amoun)async{
+    try{
+paymentIntent= await createPaymentIntent(amoun,'THB');
+await Stripe.instance.initPaymentSheet(paymentSheetParameters: SetupPaymentSheetParameters(
+  paymentIntentClientSecret: paymentIntent?['client_secret'],
+  style: ThemeMode.dark,merchantDisplayName: 'Adnan'
+)).then((value) {});
+
+displayPaymentSheet();
+    }catch(e, s){
+      print('exception:$e$s');
+    }
+  }
+
+  displayPaymentSheet()async{
+    try{
+      await Stripe.instance.presentPaymentSheet().then((value) async{
+        //ออเดอร์
+        Map<String, dynamic> orderInfoMap={
+          "Product": widget.name,
+          "Price": widget.price,
+          "Name": name,
+          "Email":mail,
+          "Image":image,
+          "ProductImage":widget.image,
+          "Status": "On the way"
+        };
+        await DatabaseMethod().orderDetails(orderInfoMap);
+        // ignore: use_build_context_synchronously
+        showDialog(context: context, builder: (_)=> AlertDialog(
+          content: Column(mainAxisSize: MainAxisSize.min,
+          children: [Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.green,),
+              Text("Payment Successfull")//ชำระเงินสำเร็จ
+            ],
+            )],
+            ),
+        ));
+        paymentIntent=null;
+      }).onError((error, stackTrace){
+          print("Error is :---> $error $stackTrace");
+      });
+    } on StripeException catch(e){
+      print("Error is:---> $e");
+      showDialog(context: context, 
+      builder: (_) => AlertDialog(
+        content: Text("Cancelled"),
+      ));
+    }catch (e) {
+      print('$e');
+    }
+  }
+
+  createPaymentIntent(String amoun,String currency)async{
+    try{
+      Map<String, dynamic>body = {
+        'amount': calculateAmount(amoun),//จำนวน
+        'currency':currency,//สกุลเงิน
+        'payment_method_types[]':'card'//ประเภทวิธีการชำระเงิน
+      };
+
+      var response = await http.post(
+      Uri.parse('https://api.stripe.com/v1/payment_intents'),//apiของstripe
+                  //การอนุญาต
+      headers: {
+        'Authorization': 'Bearer $secretkey', //การอนุญาต
+        'Content-Type': 'application/x-www-form-urlencoded',//ประเภทเนื้อหา
+        },body: body,
+        );
+        return jsonDecode(response.body);
+    }catch (err) {
+        //การเรียกเก็บเงินผู้ใช้ผิดพลาด
+    print('err charging user: ${err.toString()}');
+  }
+  }
+
+  calculateAmount(String amoun){
+    final calculateAmount = (int.parse(amoun) * 100);
+    return calculateAmount.toString();
+  }
+} 

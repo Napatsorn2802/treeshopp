@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:treeshop/Admin/add_product.dart';
 import 'package:treeshop/Admin/admin_login.dart';
 import 'package:treeshop/pages/bottomnav.dart';
@@ -7,9 +8,11 @@ import 'package:treeshop/pages/home.dart';
 import 'package:treeshop/pages/login.dart';
 import 'package:treeshop/pages/onboarding.dart';
 import 'package:treeshop/pages/signup.dart';
+import 'package:treeshop/services/constant.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey=publishablekey;
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -21,11 +24,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sealy Shop',
+      title: 'Tree Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Nunito',
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.brown,
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: AdminLogin(),
+      home: BottomNav(),
     );
   }
 }
