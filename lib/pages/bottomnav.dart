@@ -46,15 +46,15 @@ class _BottomNavState extends State<BottomNav> {
         //บรรดาไอค่อน
         items: [
           Icon(
-            Icons.home_filled,
+            Icons.home_filled,//บ้าน
             color: Colors.white,
             ),
           Icon(
-            Icons.shopping_bag_outlined,
+            Icons.shopping_bag_outlined,//กระเป๋าประวัติคำสั่งซื้อ
             color: Colors.white,
             ),
           Icon(
-            Icons.person_outlined,
+            Icons.person_outlined,//บัชชี
             color: Colors.white,
             ),
         ]

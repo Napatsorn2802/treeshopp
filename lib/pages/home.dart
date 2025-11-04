@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:treeshop/pages/category_products.dart';
+import 'package:treeshop/pages/product_detail.dart';
 import 'package:treeshop/services/database.dart';
 import 'package:treeshop/services/shared_pref.dart';
 import 'package:treeshop/widget/support_widget.dart';
@@ -96,7 +97,8 @@ initiateSearch(value){
     });
   }*/
   var queryResultSet=[];
-var tempSearchStore=[];
+  var tempSearchStore=[];
+  TextEditingController searchcontroller= new TextEditingController();
 
 initiateSearch(value){
   // 1. จัดการค่าว่าง (RangeError fix)
@@ -209,14 +211,26 @@ void initState(){
               borderRadius: BorderRadius.circular(20)) ,
               width: MediaQuery.of(context).size.width,
               child: TextField(
+                controller: searchcontroller,
                 onChanged: (value){
-                  initiateSearch(value);
+                  initiateSearch(value.toUpperCase());
                 },
                 decoration: InputDecoration(
                 border:InputBorder.none,
                 hintText: "Search products",
                 hintStyle:AppWidget.lightTextFeildStyle(),
-                prefixIcon: const Icon(Icons.search,
+                prefixIcon: search? GestureDetector(
+                  onTap: (){
+                    search=false;
+                    tempSearchStore=[];
+                    queryResultSet=[];
+                    searchcontroller.text="";
+                    setState(() {
+                      
+                    });
+                  },
+                  child: Icon(Icons.close)): Icon(
+                  Icons.search,
                 color:Color.fromARGB(255, 112, 80, 49))),//ไอค่อนค้นห่
               ),
             ),
@@ -696,14 +710,29 @@ void initState(){
       ),
     );
   }
-
+  //เวลาค้นหาละภาพสินค้าชื่อจะอยู่ตรงส่วนนี้
    Widget buildResultCard(data){
-    return Container(
-      height: 100,
-      child: Row(children: [
-        Image.network(data["Image"], height: 50,width: 50,fit: BoxFit.cover,),
-        Text(data["Name"],style: AppWidget.semiboldTextFeildStyle(),)
-      ],),
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetail(detail: data["Detail"], image: data["Image"], name: data["Name"], price: data["Price"])));
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: 10),//ทางซ้ายของรูปภาพ
+        margin: EdgeInsets.only(bottom: 10),//เพิ่มช่องว่างด้านล่าง
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(131, 255, 255, 255),//สีพื้นหลังของกรอบสินค้า
+          borderRadius: BorderRadius.circular(10),//ความโค้งมนของภาพ
+        ),
+        height: 100,
+        child: Row(children: [
+          ClipRRect(
+          borderRadius: BorderRadius.circular(10),//ความโค้งมนของภาพ
+          child:  Image.network(data["Image"], height: 80,width: 80,fit: BoxFit.cover,)),//การปรับขนาดของภาพ
+          SizedBox(width: 20,),//ระยะความกว้าง
+          Text(data["Name"],style: AppWidget.semiboldTextFeildStyle(),)
+        ],),
+      ),
     );
   }
 }
@@ -723,7 +752,7 @@ class CategoryTile extends StatelessWidget{
         padding: EdgeInsets.all(20),
         margin: EdgeInsets.only(right: 20),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(131, 255, 255, 255),//สีพื้นหลังของไอค่อยจัวเลือก
+          color: const Color.fromARGB(131, 255, 255, 255),//สีพื้นหลังของไอค่อยตัวเลือก
           borderRadius: BorderRadius.circular(10)
         ),
         child: Column(
