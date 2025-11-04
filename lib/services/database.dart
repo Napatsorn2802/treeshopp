@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:treeshop/Admin/all_orders.dart';
 
 class DatabaseMethod{
 
@@ -8,6 +7,12 @@ class DatabaseMethod{
       .collection("users")
       .doc(id)
       .set(userInfoMap);
+  }
+  //ค้นหา
+   Future addAllProducts(Map<String, dynamic> userInfoMap,)async{
+    return await FirebaseFirestore.instance
+      .collection("Products")
+      .add(userInfoMap);
   }
   
   Future addProduct(Map<String, dynamic> userInfoMap, String categoryname)async{
@@ -50,4 +55,13 @@ class DatabaseMethod{
       .collection("Orders")
       .add(userInfoMap);
   }
+
+  Future<QuerySnapshot> search(String updatedname) async {
+  return await FirebaseFirestore.instance
+    .collection("Products")
+    .where("SearchKey", isEqualTo: updatedname
+    .substring(0,1)
+    .toUpperCase())
+    .get();
+}
 }

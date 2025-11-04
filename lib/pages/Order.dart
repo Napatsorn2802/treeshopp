@@ -56,44 +56,47 @@ class _OrderState extends State<Order> {
                   padding: EdgeInsets.only(left: 20,top:10,bottom: 10),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.white,//สีกรอบการสั่งซื้อ
+                   color: Color(0xFF6B4E28).withOpacity(0.3),//สีกรอบการสั่งซื้อ
                     borderRadius: BorderRadius.circular(10),//ความโค้งมนของกรอบ
                   ),
                     child: Row(
-                    children: [
-                      Image.network(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
                         ds["ProductImage"],//รูปภาพ
                         height: 110,//สูงของกรอบ
                         width: 110,//กว้างของกรอบ
                         fit: BoxFit.cover,
                       ),
-                      SizedBox(width: 15), //เว้นระยะระหว่างรูปกับข้อความ
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start, //จัดข้อความชิดซ้าย
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              ds["Product"],
-                              style: AppWidget.semiboldTextFeildStyle(),),
-                            SizedBox(height: 5),
-                            Text(
-                              "฿" + ds["Price"],
-                              style: TextStyle(
-                                color: (const Color.fromARGB(255, 112, 80, 49)), //สีส้มเหมือนในรูป
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,)),
-                            SizedBox(height: 5),
-                            Text(
-                              "Status : " + ds["Status"],
-                              style: TextStyle(
-                                color: (const Color.fromARGB(255, 112, 80, 49)), //สีดำสำหรับ Status
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.normal,)),
-                        ],)
-                      )
-                    ],
-                  ),
+                    ),
+                    SizedBox(width: 15), //เว้นระยะระหว่างรูปกับข้อความ
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, //จัดข้อความชิดซ้าย
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          ds["Product"],
+                          style: AppWidget.semiboldTextFeildStyle(),),
+                        SizedBox(height: 5),
+                        Text(
+                          "฿" + ds["Price"],
+                          style: TextStyle(
+                            color: (const Color.fromARGB(255, 112, 80, 49)), //สีส้มเหมือนในรูป
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,)),
+                        SizedBox(height: 5),
+                        Text(
+                          "Status : " + ds["Status"],
+                          style: TextStyle(
+                            color: (const Color.fromARGB(255, 112, 80, 49)), //สีดำสำหรับ Status
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.normal,)),
+                    ],)
+                  )
+                ],
+              ),
                 ),
               ),
         );
@@ -106,7 +109,7 @@ class _OrderState extends State<Order> {
     return  Scaffold(
       backgroundColor: Color.fromARGB(168, 153, 115, 55),//สีพื้นหลัง
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(168, 153, 115, 55),//สีพื้นหลังของชื่อหัวข้อ
+               backgroundColor: Color.fromARGB(168, 153, 115, 55),//สีพื้นหลังหัวข้อ
         title: Center(
           child: Text("Current Orders",//คำสั่งซื้อปัจจุบัน
           style: AppWidget.boldTextFeildStyle(),)),),

@@ -36,19 +36,24 @@ class _AddProductState extends State<AddProduct> {
       final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
       var dowloadUrl = await (await task).ref.getDownloadURL();
 
+      String firstletter= namecontroller.text.substring(0,1).toUpperCase();
+
       Map<String, dynamic> addProduct = {
         "Name": namecontroller.text,
         "Image": dowloadUrl,
+        "SearchKey":firstletter,
+        "UpdatedName":namecontroller.text.toUpperCase(),
         "Price": pricecontroller.text,
         "Detail": detailcontroller.text,
       };
-      await DatabaseMethod().addProduct(addProduct, value!).then((value) {
+      await DatabaseMethod().addProduct(addProduct, value!).then((value) async{
+        await DatabaseMethod().addAllProducts(addProduct);
         selectedImage = null;
         namecontroller.text = "";
         pricecontroller.text = "";
         detailcontroller.text = "";
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Color(0xFF6B5444),
+            backgroundColor: Color.fromARGB(255, 14, 155, 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),

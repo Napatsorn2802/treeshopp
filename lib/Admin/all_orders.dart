@@ -47,7 +47,7 @@ Widget allOrders(){
                   padding: EdgeInsets.only(left: 20,top:10,bottom: 10),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.white,//สีกรอบการสั่งซื้อ
+                  color: Color(0xFF6B4E28).withOpacity(0.3),//สีกรอบการสั่งซื้อ
                     borderRadius: BorderRadius.circular(10),//ความโค้งมนของกรอบ
                   ),
                     child: Row(
