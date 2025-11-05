@@ -4,6 +4,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:treeshop/Admin/add_product.dart';
 import 'package:treeshop/Admin/admin_login.dart';
 import 'package:treeshop/Admin/all_orders.dart';
+import 'package:treeshop/Admin/all_products.dart';
 import 'package:treeshop/Admin/home_admin.dart';
 import 'package:treeshop/pages/bottomnav.dart';
 import 'package:treeshop/pages/home.dart';

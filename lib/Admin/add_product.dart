@@ -101,16 +101,13 @@ class _AddProductState extends State<AddProduct> {
             },
             child: Container(
               margin: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(Icons.arrow_back_ios_new_outlined,
-                  color: Color(0xFF3D2E1F)),
+              
+              child: Icon(Icons.arrow_back_ios_new_outlined,//ไอค่อนย้อนกลับ
+                  color: Color.fromARGB(255, 0, 0, 0)),
             )),
         title: Text("Add Product",
             style: TextStyle(
-              color: Color(0xFF3D2E1F),
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 24,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,
@@ -320,7 +317,7 @@ class _AddProductState extends State<AddProduct> {
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0xFF6B5444).withOpacity(0.4),
+                            color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.4),
                             blurRadius: 15,
                             offset: Offset(0, 6),
                           ),

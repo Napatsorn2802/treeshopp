@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:treeshop/Admin/home_admin.dart';
+import 'package:treeshop/pages/login.dart';
 import 'package:treeshop/widget/support_widget.dart';
 
 class AdminLogin extends StatefulWidget{
@@ -119,6 +120,31 @@ bool _obscurePassword = true;
                         ),
                      ),),
                  ),
+                 SizedBox(height: 10,),
+                 // 🔹 ลิงก์ Sign In
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?  ",
+                      style: AppWidget.lightTextFeildStyle(),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => LogIn()));
+                      },
+                      child: const Text(
+                        "Sign In",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 83, 35, 1),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

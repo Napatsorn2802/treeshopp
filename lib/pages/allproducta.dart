@@ -30,7 +30,7 @@ class AllProducts extends StatelessWidget {
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text("No products found"));
+            return const Center(child: Text("No products found"));//ไม่พบสินค้า
           }
 
           final products = snapshot.data!.docs;

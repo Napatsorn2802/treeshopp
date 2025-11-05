@@ -103,7 +103,13 @@ class _CartPageState extends State<CartPage> {
 
       // ✅ ชำระสำเร็จ
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Payment completed✅")),//ชำระเงินสำเร็จ 
+        const SnackBar(content: 
+        Text("Payment completed✅",//ชำระเงินสำเร็จ 
+        style: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: Colors.green,
+      ),),),
       );
 
       // 🧾 บันทึกคำสั่งซื้อทั้งหมด

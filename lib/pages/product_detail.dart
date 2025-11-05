@@ -22,7 +22,7 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
-  String? name, mail, image;
+  String? name, mail; // ❌ เอา image ผู้ใช้ทิ้ง ไม่ใช้แล้ว
   Map<String, dynamic>? paymentIntent;
 
   @override
@@ -34,7 +34,6 @@ class _ProductDetailState extends State<ProductDetail> {
   getSharedPref() async {
     name = await SharedPreferenceHelper().getUserName();
     mail = await SharedPreferenceHelper().getUserEmail();
-    image = await SharedPreferenceHelper().getUserImage();
     setState(() {});
   }
 
@@ -48,7 +47,7 @@ class _ProductDetailState extends State<ProductDetail> {
       backgroundColor: const Color.fromARGB(146, 113, 94, 64),
       body: Column(
         children: [
-          // ส่วนรูปภาพ
+          // ส่วนรูปภาพสินค้า
           Container(
             height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width,
@@ -121,7 +120,7 @@ class _ProductDetailState extends State<ProductDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ชื่อสินค้า + ราคา
+                  // ชื่อ + ราคา
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -197,22 +196,34 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
             child: Row(
               children: [
-                // ปุ่ม Add to Cart
+                // 🛒 ปุ่ม Add to Cart
                 Expanded(
                   child: GestureDetector(
                     onTap: () async {
                       await addToCart();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("✅ Added to cart"),
+                          content: Center(
+                            child: Text(
+                              "Add to cart",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                           backgroundColor: Colors.green,
+                          duration: Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
+                          margin: EdgeInsets.all(16),
                         ),
                       );
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 224, 224, 224),//สีปุ่ม
+                        color: const Color.fromARGB(255, 224, 224, 224),
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: const Center(
@@ -229,7 +240,8 @@ class _ProductDetailState extends State<ProductDetail> {
                   ),
                 ),
                 const SizedBox(width: 15),
-                // ปุ่ม Buy Now
+
+                // 💳 ปุ่ม Buy Now
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
@@ -262,12 +274,12 @@ class _ProductDetailState extends State<ProductDetail> {
     );
   }
 
-  // 🛒 เพิ่มลงตะกร้า
+  // 🛒 เพิ่มสินค้าลงตะกร้า
   Future<void> addToCart() async {
     Map<String, dynamic> cartItem = {
       "Product": widget.name,
       "Price": widget.price,
-      "Image": widget.image,
+      "Image": widget.image, // ✅ รูปสินค้าจริง
       "UserEmail": mail,
       "UserName": name,
       "Timestamp": DateTime.now(),
@@ -293,29 +305,44 @@ class _ProductDetailState extends State<ProductDetail> {
     }
   }
 
+  // ✅ แสดงหน้าชำระเงิน
   displayPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet();
+
+      // บันทึกคำสั่งซื้อเข้า Firestore
       Map<String, dynamic> orderInfoMap = {
         "Product": widget.name,
         "Price": widget.price,
-        "Name": name,
         "Email": mail,
-        "Image": image,
-        "ProductImage": widget.image,
+        "Name": name,
+        "Image": widget.image, // ✅ ใช้รูปสินค้าจริง
         "Status": "On the way",
+        "Timestamp": DateTime.now(),
       };
+
       await DatabaseMethod().orderDetails(orderInfoMap);
+
+      // แสดงแจ้งเตือนสำเร็จ
       // ignore: use_build_context_synchronously
       showDialog(
         context: context,
-        builder: (_) => const AlertDialog(
-          content: Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.green),
-              SizedBox(width: 10),
-              Text("Payment Successful"),
-            ],
+        builder: (_) => AlertDialog(
+          backgroundColor: Colors.green,
+          content: const Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Payment Successful",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -325,6 +352,7 @@ class _ProductDetailState extends State<ProductDetail> {
     }
   }
 
+  // ✅ สร้าง PaymentIntent (Stripe)
   createPaymentIntent(String amount, String currency) async {
     try {
       Map<String, dynamic> body = {
