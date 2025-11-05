@@ -39,7 +39,7 @@ class _OrderState extends State<Order> {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.data.docs.isEmpty) {
-          return const Center(child: Text("ยังไม่มีคำสั่งซื้อ 😅"));
+          return const Center(child: Text("No orders yet"));//ยังไม่มีคำสั่งซื้อ
         }
 
         return ListView.builder(

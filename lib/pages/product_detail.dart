@@ -212,7 +212,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: const Color.fromARGB(255, 224, 224, 224),//สีปุ่ม
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: const Center(

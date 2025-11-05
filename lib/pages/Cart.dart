@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:treeshop/services/constant.dart';
 import 'package:treeshop/services/database.dart';
 import 'package:treeshop/services/shared_pref.dart';
+import 'package:treeshop/widget/support_widget.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -63,7 +64,7 @@ class _CartPageState extends State<CartPage> {
       );
       return jsonDecode(response.body);
     } catch (err) {
-      print('เกิดข้อผิดพลาด: ${err.toString()}');
+      print('Error: ${err.toString()}');//เกิดข้อผิดพลาด
     }
   }
 
@@ -81,7 +82,7 @@ class _CartPageState extends State<CartPage> {
 
       if (cartSnapshot.docs.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("ยังไม่มีสินค้าในตะกร้า 😅")),
+          const SnackBar(content: Text("There are no products in the cart")),//ยังไม่มีสินค้าในตะกร้า 
         );
         setState(() => isLoading = false);
         return;
@@ -102,7 +103,7 @@ class _CartPageState extends State<CartPage> {
 
       // ✅ ชำระสำเร็จ
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("ชำระเงินสำเร็จ ✅")),
+        const SnackBar(content: Text("Payment completed✅")),//ชำระเงินสำเร็จ 
       );
 
       // 🧾 บันทึกคำสั่งซื้อทั้งหมด
@@ -127,7 +128,7 @@ class _CartPageState extends State<CartPage> {
     } catch (e) {
       setState(() => isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("เกิดข้อผิดพลาด: $e")),
+        SnackBar(content: Text("Error: $e")),//เกิดข้อผิดพลาด
       );
     }
   }
@@ -135,9 +136,13 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F4EE),
+      backgroundColor: const Color.fromARGB(168, 153, 115, 55),
       appBar: AppBar(
-        title: const Text("Add to cart"),//แอดสินค้า
+        title:  
+        Center(
+          child: Text("Add to cart",
+              style: AppWidget.boldTextFeildStyle()),
+        ),//แอดสินค้า
         backgroundColor: const Color(0xFF6B4E28),
       ),
       body: cartStream == null
@@ -161,8 +166,8 @@ class _CartPageState extends State<CartPage> {
                             DocumentSnapshot ds = snapshot.data.docs[index];
                             return Card(
                               margin: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 8),
-                              color: const Color(0xFFEDE3F3),
+                                  horizontal: 20, vertical: 15),//เพิ่มขนาดกรอบสินค้า
+                               color: const Color.fromARGB(59, 218, 218, 218).withOpacity(0.7),//สีกรอบสินค้า
                               child: ListTile(
                                 leading: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
@@ -173,11 +178,23 @@ class _CartPageState extends State<CartPage> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                title: Text(ds["Product"]),
-                                subtitle: Text("฿${ds["Price"]}"),
+                                title: Text(ds["Product"],
+                                style: const TextStyle(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontSize: 19.0,
+                                fontWeight: FontWeight.bold,
+                              ),),
+                                subtitle: Text("฿${ds["Price"]}",
+                                style: const TextStyle(
+                                color: Color.fromARGB(255, 73, 50, 28),//สีฟอนราคา
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold,
+                              ),),
+                                //ไอค่อนถังขยะ
                                 trailing: IconButton(
                                   icon: const Icon(Icons.delete,
-                                      color: Colors.redAccent),
+                                      color: Color.fromARGB(255, 193, 9, 9),
+                                      size: 40,),//เพิ่มขนาดไอค่อน
                                   onPressed: () async {
                                     await DatabaseMethod()
                                         .deleteCartItem(ds.id);
@@ -199,13 +216,15 @@ class _CartPageState extends State<CartPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text(
-                                  "ราคารวมทั้งหมด:",
-                                  style: TextStyle(fontSize: 16),
+                                  "Total price:",//ราคารวมทั้งหมด
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   "฿${totalPrice.toStringAsFixed(2)}",
                                   style: const TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFF6B4E28),
                                   ),
@@ -218,7 +237,7 @@ class _CartPageState extends State<CartPage> {
                               height: 50,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF6B4E28),
+                                  backgroundColor: const Color(0xFF6B4E28),//สีพื้นหลังของปุ่มชำระเงิน
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
@@ -229,7 +248,7 @@ class _CartPageState extends State<CartPage> {
                                     ? const CircularProgressIndicator(
                                         color: Colors.white)
                                     : const Text(
-                                        "ชำระเงิน",
+                                        "Buy Now",//ชำระเงิน
                                         style: TextStyle(
                                             fontSize: 18, color: Colors.white),
                                       ),
