@@ -1,5 +1,6 @@
 // Onboarding.dart - Brown Theme
 import 'package:flutter/material.dart';
+import 'package:treeshop/pages/login.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -107,8 +108,9 @@ class _OnboardingState extends State<Onboarding> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
-                          onTap: () {
-                            // นำทางไปหน้าถัดไป
+                          onTap: (
+                          ) {
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>LogIn()));
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(

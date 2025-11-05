@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,20 +45,22 @@ class _AddProductState extends State<AddProduct> {
         "Price": pricecontroller.text,
         "Detail": detailcontroller.text,
       };
-      await DatabaseMethod().addProduct(addProduct, value!).then((value) async{
+      await DatabaseMethod().addProduct(addProduct, value!).then((_) async{
         await DatabaseMethod().addAllProducts(addProduct);
         selectedImage = null;
         namecontroller.text = "";
         pricecontroller.text = "";
         detailcontroller.text = "";
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
             backgroundColor: Color.fromARGB(255, 14, 155, 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
             behavior: SnackBarBehavior.floating,
             content: Row(
-              children: [
+              children: const[
                 Icon(Icons.check_circle, color: Colors.white),
                 SizedBox(width: 10),
                 Expanded(

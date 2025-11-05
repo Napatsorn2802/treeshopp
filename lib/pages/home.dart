@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:treeshop/pages/allproducta.dart';
 import 'package:treeshop/pages/category_products.dart';
 import 'package:treeshop/pages/product_detail.dart';
 import 'package:treeshop/services/database.dart';
@@ -248,13 +249,20 @@ void initState(){
                   "All Products",//สินค้าทั้งหมด
                   style: AppWidget.semiboldTextFeildStyle()
                 ),
-               /* Text(
-                  "See all",//ดูทั้งหมด
-                  style: TextStyle(
-                    color: (const Color.fromARGB(255, 112, 80, 49)),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,)
-                )*/
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context)=> const AllProducts()),);
+                  },
+                  child: const Text(
+                    "See all",//ดูทั้งหมด
+                    style: TextStyle(
+                      color: (const Color.fromARGB(255, 112, 80, 49)),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,)
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 30,),
