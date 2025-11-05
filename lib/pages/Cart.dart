@@ -137,7 +137,7 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F4EE),
       appBar: AppBar(
-        title: const Text("🛒 ตะกร้าสินค้า"),
+        title: const Text("Add to cart"),//แอดสินค้า
         backgroundColor: const Color(0xFF6B4E28),
       ),
       body: cartStream == null
@@ -148,7 +148,7 @@ class _CartPageState extends State<CartPage> {
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.data.docs.isEmpty) {
-                  return const Center(child: Text("ยังไม่มีสินค้าในตะกร้า 😢"));
+                  return const Center(child: Text("There are no products in the cart."));//ยังไม่มีสินค้าในตะกร้า 
                 } else {
                   calculateTotal(snapshot);
 
