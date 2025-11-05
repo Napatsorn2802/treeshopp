@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:treeshop/services/shared_pref.dart';
 
 class DatabaseMethod{
 
@@ -89,4 +90,12 @@ class DatabaseMethod{
     .toUpperCase())
     .get();
 }
+  // ✅ เพิ่มฟังก์ชันอัปเดตชื่อ
+  Future updateUserName(String newName) async {
+    String? userId = await SharedPreferenceHelper().getUserId();
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId)
+        .update({"name": newName});
+  }
 }

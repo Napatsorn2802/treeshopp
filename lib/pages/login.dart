@@ -1,6 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:treeshop/Admin/admin_login.dart';
 import 'package:treeshop/pages/bottomnav.dart';
 import 'package:treeshop/pages/signup.dart';
 import 'package:treeshop/widget/support_widget.dart';
@@ -142,14 +143,14 @@ bool _obscurePassword = true; //สำหรับเปิดปิดรหั
                       ),
                     ),
                   ),
-                SizedBox(height: 20,),
-                 Row(
+                SizedBox(height: 5,),
+                 /*Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                    children: [
                      Text("Forgot Passwored?",//ลืมรหัสผ่าน
                      style:TextStyle(color:Color.fromARGB(255, 117, 70, 4),fontSize: 18,fontWeight: FontWeight.w500)),
                    ],
-                 ),
+                 ),*/
                  SizedBox(height: 30,),
                  GestureDetector(
                   onTap:(){
@@ -198,7 +199,24 @@ bool _obscurePassword = true; //สำหรับเปิดปิดรหั
                       child: Text("Sign Up",//สมัครสมาชิก
                       style:TextStyle(color:Color.fromARGB(255, 117, 70, 4),fontSize: 18,fontWeight: FontWeight.w900)),
                     ),
-                 ],)
+                 ],
+                 ),
+                 SizedBox(height: 10,),
+                 Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Account came in??  ",//เข้าสู่บัญชี?
+                    style: AppWidget.lightTextFeildStyle(),),
+                    GestureDetector(
+                      onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminLogin()));//เส้นทางพาทคลิกไปหน้าสมัครสมาชิก
+                      },
+                      child: Text("AdminLogin",//เข้าสู่ระบบแอดมิน
+                      style:TextStyle(color:Color.fromARGB(255, 117, 70, 4),fontSize: 18,fontWeight: FontWeight.w900)),
+                    ),
+                 ],
+                 )
+                 
               ],
             ),
           ),
