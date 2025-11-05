@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:treeshop/pages/Cart.dart';
 import 'package:treeshop/pages/Order.dart';
 import 'package:treeshop/pages/Profile.dart';
 import 'package:treeshop/pages/home.dart';
@@ -17,6 +18,7 @@ class _BottomNavState extends State<BottomNav> {
 
   late Home HomePage;
   late Order order;
+  late CartPage cart;
   late Profile profile;
   int currentTabIndex=0;
 
@@ -24,8 +26,9 @@ class _BottomNavState extends State<BottomNav> {
     void initState(){
       HomePage= Home();
       order = Order();
+      cart = CartPage();
       profile = Profile();
-      pages = [HomePage,order,profile]; 
+      pages = [HomePage,cart,order,profile]; 
       super.initState();
     }
 
@@ -49,10 +52,17 @@ class _BottomNavState extends State<BottomNav> {
             Icons.home_filled,//บ้าน
             color: Colors.white,
             ),
+
+          Icon(
+            Icons.shopping_cart, //ตะกร้าสินค้า
+            color: Colors.white
+            ),
+
           Icon(
             Icons.shopping_bag_outlined,//กระเป๋าประวัติคำสั่งซื้อ
             color: Colors.white,
             ),
+
           Icon(
             Icons.person_outlined,//บัชชี
             color: Colors.white,

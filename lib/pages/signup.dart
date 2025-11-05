@@ -149,7 +149,7 @@ bool _obscurePassword = true;
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Email",//อีเมลในช่อง
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
+                      hintStyle: TextStyle(color: Colors.grey.shade400),//สีกรอบ
                     ),
                   ),
                 ),
@@ -158,9 +158,9 @@ bool _obscurePassword = true;
                   Container(
                     padding: EdgeInsets.only(left: 20, right: 10),
                     decoration: BoxDecoration(
-                      color: Color(0xFFF4F5F9),
+                      color: Color(0xFFF4F5F9),//สีกรอบ
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Color(0xFFE8DED2), width: 1.5),
+                      border: Border.all(color: Color(0xFFE8DED2), width: 1.5),//สีกรอบ
                     ),
                     child: TextFormField(
                       obscureText: _obscurePassword, // เปลี่ยนจาก true เป็น _obscurePassword

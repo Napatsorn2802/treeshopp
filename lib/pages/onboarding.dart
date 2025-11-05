@@ -19,6 +19,7 @@ class _OnboardingState extends State<Onboarding> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
+              //สีพื้นหลัง2สีไรเฉด
               Color(0xFF8B6F47),
               Color(0xFFD4C4B0),
             ],
@@ -58,12 +59,12 @@ class _OnboardingState extends State<Onboarding> {
                         padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           // ignore: deprecated_member_use
-                          color: Color(0xFF8B6F47).withOpacity(0.2),
+                          color: Color(0xFF8B6F47).withOpacity(0.2),//กรอบสีไอค่อนดอกไม้
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
                           Icons.local_florist,
-                          color: Color(0xFF6B5444),
+                          color: Color(0xFF6B5444),//สีไอค่อนดอกไม้
                           size: 28,
                         ),
                       ),
@@ -120,6 +121,7 @@ class _OnboardingState extends State<Onboarding> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
+                                  //สีปุ่มnext 2สี
                                   Color(0xFF6B5444),
                                   Color(0xFF8B6F47),
                                 ],

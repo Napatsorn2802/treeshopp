@@ -21,6 +21,31 @@ class DatabaseMethod{
       .add(userInfoMap);
   }
 
+      // เพิ่มสินค้าลงตะกร้า
+    Future addToCart(Map<String, dynamic> cartItem) async {
+      return await FirebaseFirestore.instance
+          .collection("cart")
+          .add(cartItem);
+    }
+
+    // ดึงตะกร้าของผู้ใช้
+    Future<Stream<QuerySnapshot>> getUserCart(String email) async {
+     return FirebaseFirestore.instance
+      .collection("cart")
+      .where("UserEmail", isEqualTo: email)
+      .snapshots();
+      }
+
+
+
+    // ลบสินค้าจากตะกร้า
+    Future deleteCartItem(String id) async {
+      return await FirebaseFirestore.instance
+          .collection("cart")
+          .doc(id)
+          .delete();
+    }
+
    updateStatus(
     String id)async{
     return await FirebaseFirestore.instance
