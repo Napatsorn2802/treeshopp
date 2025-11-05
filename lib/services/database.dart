@@ -98,4 +98,13 @@ class DatabaseMethod{
         .doc(userId)
         .update({"name": newName});
   }
+
+  // ✅ อัปเดตที่อยู่
+  Future updateUserAddress(String newAddress) async {
+    String? userId = await SharedPreferenceHelper().getUserId();
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId)
+        .update({"address": newAddress});
+  }
 }

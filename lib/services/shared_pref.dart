@@ -22,6 +22,12 @@ class SharedPreferenceHelper{
     return prefs.setString(userEmailkey, getUserEmail);
   }
 
+  // ✅ เพิ่มการเก็บที่อยู่
+  Future<void> saveUserAddress(String address) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("USERADDRESSKEY", address);
+  }
+
   Future<bool> saveUserImage(String getUserImage)async{
     SharedPreferences prefs= await SharedPreferences.getInstance();
     return prefs.setString(userImagekey, getUserImage);
@@ -47,6 +53,10 @@ class SharedPreferenceHelper{
     return prefs.getString(userImagekey);
   }
   
-    
+    // ✅ ดึงที่อยู่ออกมา
+  Future<String?> getUserAddress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("USERADDRESSKEY");
+  }
 }
 
