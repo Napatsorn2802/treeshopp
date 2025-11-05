@@ -31,7 +31,7 @@ class _AddProductState extends State<AddProduct> {
     if (selectedImage != null && namecontroller.text != "") {
       String addId = randomAlphaNumeric(10);
       Reference firebaseStorageRef =
-          FirebaseStorage.instance.ref().child("blogImage").child(addId);
+          FirebaseStorage.instance.ref().child("blogImage").child(addId);//เวลาเพิ่มสินค้าภาพจะเก็บอยู่ในblogImage
 
       final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
       var dowloadUrl = await (await task).ref.getDownloadURL();
@@ -90,9 +90,9 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFB89968),
+      backgroundColor: Color(0xA8BF9551),
       appBar: AppBar(
-        backgroundColor: Color(0xFFB89968),
+        backgroundColor: Color(0xA8BF9551),
         elevation: 0,
         leading: GestureDetector(
             onTap: () {
@@ -125,7 +125,7 @@ class _AddProductState extends State<AddProduct> {
                 //อัพโหลดรูปสินค้า
                 Text(
                   "Upload the Product Image",
-                  style: AppWidget.lightTextFeildStyle(),
+                  style: AppWidget.semiboldTextFeildStyle(),
                 ),
                 SizedBox(height: 20),
                 selectedImage == null
@@ -177,7 +177,7 @@ class _AddProductState extends State<AddProduct> {
                 SizedBox(height: 30),
                 Text(
                   "Product Name", //ชื่อสินค้า
-                  style: AppWidget.lightTextFeildStyle(),
+                  style: AppWidget.semiboldTextFeildStyle(),
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -203,7 +203,7 @@ class _AddProductState extends State<AddProduct> {
                 SizedBox(height: 30),
                 Text(
                   "Product Price", //ราคาสินค้า
-                  style: AppWidget.lightTextFeildStyle(),
+                  style: AppWidget.semiboldTextFeildStyle(),
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -229,7 +229,7 @@ class _AddProductState extends State<AddProduct> {
                 SizedBox(height: 30),
                 Text(
                   "Product Detail", //รายละเอียดสินค้า
-                  style: AppWidget.lightTextFeildStyle(),
+                  style: AppWidget.semiboldTextFeildStyle(),
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -256,7 +256,7 @@ class _AddProductState extends State<AddProduct> {
                 SizedBox(height: 40),
                 Text(
                   "Product Category", //หมวดหมู่สินค้า
-                  style: AppWidget.lightTextFeildStyle(),
+                  style: AppWidget.semiboldTextFeildStyle(),
                 ),
                 SizedBox(height: 20),
                 Container(

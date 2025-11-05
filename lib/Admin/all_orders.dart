@@ -117,7 +117,10 @@ Widget allOrders(){
   @override
   Widget build(BuildContext constext){
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("All Orders",style: AppWidget.boldTextFeildStyle(),))),
+       backgroundColor: Color(0xA8BF9551),//สีพื้นหลังทั้งแอพ
+      appBar: AppBar(
+         backgroundColor: Color(0xA8BF9551),//สีพื้นหลังแอบบา
+        title: Center(child: Text("All Orders",style: AppWidget.boldTextFeildStyle(),))),
       body:Container(
         margin: EdgeInsets.only(top:10, left:20 ,right:20 ),//บน ซ้าย ขวา ของออเดอร์
         child: Column(children: [

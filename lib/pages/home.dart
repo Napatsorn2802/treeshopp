@@ -30,78 +30,12 @@ List Categoryname=[
 ];
 
 //ค้นหา
-/*var queryResultSet=[];
-var tempSearchStore=[];
-
-initiateSearch(value){
-  //จักการค่าว่าง
-  if(value.isEmpty){
-    setState(() {
-      search = false;
-      queryResultSet=[];
-      tempSearchStore=[];
-    });
-    return;//ออกจากฟังชั่น
-  }
-  setState(() {
-    search=true;
-  });
-
-  String CapitalizedValue = "";
-  if(value.length > 0) {
-     CapitalizedValue = value.substring(0,1).toUpperCase();
-  }
-  if(value.length > 1){
-    CapitalizedValue += value.substring(1);
-  } else if (value.length == 1) {
-    CapitalizedValue = value.toUpperCase();
-  }
-
-  // ใช้ค่า value ที่ผู้ใช้พิมพ์มา (แปลงเป็นพิมพ์เล็กทั้งหมด) สำหรับการกรองในเครื่อง (Local Filtering)
-  String searchValueLower = value.toLowerCase();
-
-  if(queryResultSet.isEmpty || value.length == 1){
-    // เมื่อพิมพ์อักขระตัวแรก ให้เรียกค้นข้อมูลจาก Firestore
-    // สมมติว่า DatabaseMethod().search(value) ดึงข้อมูลที่เกี่ยวข้องมาเก็บไว้ใน queryResultSet
-    DatabaseMethod().search(value).then((QuerySnapshot docs){
-      queryResultSet = []; 
-      for(var doc in docs.docs){
-        queryResultSet.add(doc.data() as Map<String, dynamic>);
-      }
-      
-      // กรองผลลัพธ์ที่ดึงมาใหม่
-      tempSearchStore = [];
-      queryResultSet.forEach((element) {
-        // ใช้ฟิลด์ 'Name' หรือ 'UpdatedName' และแปลงเป็นพิมพ์เล็กเพื่อเปรียบเทียบ
-        String productName = element['Name']?.toString().toLowerCase() ?? ""; // ใช้ Name หรือฟิลด์ที่คุณใช้
-        
-        // ใช้ .contains() เพื่อค้นหาข้อความย่อยที่ตรงกัน (รองรับไทย/อังกฤษ)
-        if(productName.contains(searchValueLower)){
-          tempSearchStore.add(element);
-        }
-      });
-      setState(() {});
-    });
-  }else{
-    // เมื่อพิมพ์อักขระตัวที่ 2 เป็นต้นไป ให้กรองจากผลลัพธ์ที่มีอยู่ (queryResultSet)
-    tempSearchStore=[];
-    queryResultSet.forEach((element) {
-      String productName = element['Name']?.toString().toLowerCase() ?? "";
-      
-      // ใช้ .contains() เพื่อค้นหาข้อความย่อยที่ตรงกัน (รองรับไทย/อังกฤษ)
-      if(productName.contains(searchValueLower)){
-        setState(() {
-          tempSearchStore.add(element);
-        });
-      }
-    });
-  }*/
   var queryResultSet=[];
   var tempSearchStore=[];
   TextEditingController searchcontroller= new TextEditingController();
 
 initiateSearch(value){
-  // 1. จัดการค่าว่าง (RangeError fix)
+  // จัดการค่าว่าง (RangeError fix)
   if(value.isEmpty){
     setState(() {
       search = false;
@@ -120,7 +54,7 @@ initiateSearch(value){
 
   // เรียกค้นข้อมูลจาก Firestore เสมอ DatabaseMethod().search(value) จะส่งค่า 'value' ไปจำกัด Query ใน Firestore
   DatabaseMethod().search(value).then((QuerySnapshot docs){
-    // 4. บันทึกผลลัพธ์จาก Firestore
+    // บันทึกผลลัพธ์จาก Firestore
     queryResultSet = []; 
     for(var doc in docs.docs){
       queryResultSet.add(doc.data() as Map<String, dynamic>);
@@ -208,7 +142,7 @@ void initState(){
           const SizedBox(height: 30,),
             Container(
               decoration:BoxDecoration(color:const Color.fromARGB(168, 255, 255, 255),
-              borderRadius: BorderRadius.circular(20)) ,
+              borderRadius: BorderRadius.circular(20)) ,//ให้เป็นวงกลม
               width: MediaQuery.of(context).size.width,
               child: TextField(
                 controller: searchcontroller,
@@ -258,13 +192,13 @@ void initState(){
                       "Categories",//หมวดหมู่
                       style: AppWidget.semiboldTextFeildStyle()
                     ),
-                    Text(
+                    /*Text(
                       "See all",//ดูทั้งหมด
                       style: TextStyle(
                         color: (const Color.fromARGB(255, 112, 80, 49)),
                         fontSize: 18,
                         fontWeight: FontWeight.bold,)
-                    )
+                    )*/
                   ],
                 ),
                ]
@@ -314,13 +248,13 @@ void initState(){
                   "All Products",//สินค้าทั้งหมด
                   style: AppWidget.semiboldTextFeildStyle()
                 ),
-                Text(
+               /* Text(
                   "See all",//ดูทั้งหมด
                   style: TextStyle(
                     color: (const Color.fromARGB(255, 112, 80, 49)),
                     fontSize: 18,
                     fontWeight: FontWeight.bold,)
-                )
+                )*/
               ],
             ),
             SizedBox(height: 30,),
