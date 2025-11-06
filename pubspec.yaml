@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   curved_navigation_bar: ^1.0.6
   cloud_firestore: 
   firebase_core: 
@@ -66,11 +67,19 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/icon/
     - images/
     - images/icons8-cactus-50.png
     - images/icons8-flower-50.png
     - images/icons8-tree-50.png
     - images/icons8-fruit-50.png
+    
+
+
+flutter_launcher_icons:
+  image_path: "assets/icon/15.png"
+  android: true
+  ios: true
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
