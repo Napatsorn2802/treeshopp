@@ -88,7 +88,7 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  // 🔹 ฟังก์ชันลืมรหัสผ่าน (Forgot Password)
+  // 🔹 ฟังก์ชันลืมรหัสผ่าน
   Future<void> _forgotPasswordDialog() async {
     final TextEditingController resetEmailController = TextEditingController();
 
@@ -221,7 +221,22 @@ class _SignUpState extends State<SignUp> {
                     obscureText: _obscurePassword,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter your Password';
+                        return 'Please enter your Password';
+                      }
+                      if (value.length < 8) {
+                        return 'Password must be at least 8 characters long';
+                      }
+                      if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                        return 'Password must contain at least one uppercase letter (A-Z)';
+                      }
+                      if (!RegExp(r'[a-z]').hasMatch(value)) {
+                        return 'Password must contain at least one lowercase letter (a-z)';
+                      }
+                      if (!RegExp(r'[0-9]').hasMatch(value)) {
+                        return 'Password must contain at least one number (0-9)';
+                      }
+                      if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                        return 'Password must contain at least one special character (!@#\$%^&*)';
                       }
                       return null;
                     },
@@ -247,27 +262,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
 
-                const SizedBox(height: 10),
-
-                /* 🔹 ลิงก์ “Forgot Password?”
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: _forgotPasswordDialog,
-                      child: const Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 83, 35, 1),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),*/
-
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
 
                 // 🔹 ปุ่ม SIGN UP
                 GestureDetector(
@@ -309,7 +304,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
 
                 // 🔹 ลิงก์ Sign In
                 Row(
@@ -343,7 +338,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  // 🔹 Widget ช่องกรอกข้อมูล (ลดซ้ำ)
+  // 🔹 ฟังก์ชันสร้าง TextField
   Widget _buildTextField({
     required TextEditingController controller,
     required String hintText,
