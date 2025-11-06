@@ -1,5 +1,5 @@
 buildscript {
-    val kotlin_version by extra("1.9.23")
+    val kotlin_version by extra("2.1.0")
 
     repositories {
         google()
@@ -16,7 +16,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-    }
+        maven { url = uri("https://maven.pkg.github.com/stripe/stripe-android") }
 }
 
 val newBuildDir = rootProject.layout.buildDirectory.dir("../../build").get()
@@ -28,6 +28,4 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-tasks.register<Delete>("clean") {
-    delete(rootProject.layout.buildDirectory)
 }

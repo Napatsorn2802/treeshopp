@@ -30,19 +30,19 @@ class _OnboardingState extends State<Onboarding> {
             children: [
               // รูปภาพส่วนบน
               Expanded(
-                flex: 5,
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      "images/12.jpg",
-                      fit: BoxFit.cover,
+                  flex: 3, // ลองลดค่า flex ลงเหลือ 3 หรือ 2 เพื่อให้รูปภาพมีขนาดเล็กลง
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(20.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.asset(
+                        "images/12.jpg",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              ),
 
               // ส่วนข้อความและปุ่ม
               Expanded(
